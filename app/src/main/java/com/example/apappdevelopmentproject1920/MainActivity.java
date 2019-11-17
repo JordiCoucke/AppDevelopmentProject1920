@@ -17,18 +17,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Accesses a Cloud FireStore instance from this Activity -JC
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        AddAPersonTest(db);
-        AddPersonWithXtraInfo(db);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -70,17 +68,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void AddAPersonTest(FirebaseFirestore db)
+    public void HostSession(View view)
     {
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", "Jordi");
-        user.put("last", "Coucke");
-        user.put("born", 1995);
+        Random r = new Random();
+        int rand = r.nextInt(899) + 1000;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> session = new HashMap<>();
+        session.put("ID", rand);
 
         // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
+        db.collection("sessionID")
+                .add(session)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -95,30 +93,13 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
-    public void AddPersonWithXtraInfo(FirebaseFirestore db)
+    public void JoinSession(View view)
     {
-        // Create a new user with a first, middle, and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", "JJ");
-        user.put("middle", "The_Soviet_Love-Hammer");
-        user.put("last", "Petrovich");
-        user.put("born", 1995);
+        EditText codeMessage;
+        codeMessage = findViewById(R.id.editText2);
+        String code = codeMessage.getText().toString();
 
-        // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        
+
     }
 }
