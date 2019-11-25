@@ -32,12 +32,18 @@ import io.grpc.Context;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private final Context c = null;
+    public static String userID = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        if(userID == null) {
+            Random r = new Random();
+            int rand = r.nextInt(99999) + 100000;
+            userID = String.valueOf(rand);
+        }
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -53,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         });
         fab.setImageResource(R.drawable.addplayer);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         Map<String, Object> session = new HashMap<>();
         session.put("ID", rand);
-        session.put("nickName", nickName);
+        session.put(userID, nickName);
         String IDSessionName = "gameSessions";
         // Add a new document with a generated ID
         db.collection(IDSessionName).document("session")
@@ -131,6 +136,15 @@ public class MainActivity extends AppCompatActivity {
                                 codeMessage = findViewById(R.id.editText2);
                                 String sessionCode = codeMessage.getText().toString();
 
+
+                                EditText nickNameMessage;
+                                nickNameMessage = findViewById(R.id.editText3);
+                                String nickName = nickNameMessage.getText().toString();
+
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                DocumentReference addNickName = db.collection("gameSessions").document("session");
+
+
                                 int i = 0;
                                 for (Object o: document.getData().values())
                                 {
@@ -139,18 +153,11 @@ public class MainActivity extends AppCompatActivity {
                                     {
                                         Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
                                         startActivity(intent);
+                                        addNickName
+                                                .update(userID,nickName );
                                     }
                                     i++;
                                 }
-
-                                EditText nickNameMessage;
-                                nickNameMessage = findViewById(R.id.editText3);
-                                String nickName = nickNameMessage.getText().toString();
-
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                DocumentReference addNickName = db.collection("gameSessions").document("session");
-                                addNickName
-                                        .update("nickName",nickName );
 
                             }
                         }
