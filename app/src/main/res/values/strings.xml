@@ -2,4 +2,13 @@
     <string name="app_name">APAppDevelopmentProject1920</string>
     <string name="action_settings">Settings</string>
     <string name="titleimage">TitleImage</string>
+    <string name="app_title">Expedition Jordinson</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="chose_send">Selected Send</string>
+    <string name="chose_share">Selected Share</string>
+    <string name="chose_info">Selected Info</string>
+    <string name="chose_profile">Selected Profile</string>
+    <string name="chose_rooms">Selected Rooms</string>
+    <string name="chose_home">Selected Home</string>
 </resources>

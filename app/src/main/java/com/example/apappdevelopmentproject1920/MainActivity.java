@@ -1,29 +1,37 @@
 package com.example.apappdevelopmentproject1920;
 
+import android.app.Application;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ActionBarContainer;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         fab.setImageResource(R.drawable.addplayer);
+        DrawerLayout drawer =
+                findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle =
+                new ActionBarDrawerToggle(this, drawer, toolbar,
+                        R.string.navigation_drawer_open,
+                        R.string.navigation_drawer_close);
+        if (drawer != null) {
+            drawer.addDrawerListener(toggle);
+        }
+        toggle.syncState();
+
+        NavigationView navigationView =
+                findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
     }
 
 
@@ -101,5 +125,48 @@ public class MainActivity extends AppCompatActivity {
 
         
 
+    }
+    public void displayToast(String text){
+        Toast.makeText(this, text, Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        // Handle navigation view item clicks here.
+        switch (item.getItemId()) {
+            case R.id.home:
+                // Handle the camera import action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_home));
+                return true;
+            case R.id.rooms:
+                // Handle the gallery action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_rooms));
+                return true;
+            case R.id.profile:
+                // Handle the slideshow action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_profile));
+                return true;
+            case R.id.info:
+                // Handle the tools action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_info));
+                return true;
+            case R.id.share:
+                // Handle the share action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_share));
+                return true;
+                case R.id.send:
+                // Handle the send action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_send));
+                return true;
+            default:
+                return false;
+        }
     }
 }
