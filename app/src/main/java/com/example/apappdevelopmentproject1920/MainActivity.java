@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
 
         EditText nickNameMessage;
-        nickNameMessage = findViewById(R.id.editText3);
+        nickNameMessage = findViewById(R.id.create_button);
         String nickName = nickNameMessage.getText().toString();
 
         Random r = new Random();
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
                                 EditText nickNameMessage;
-                                nickNameMessage = findViewById(R.id.editText3);
+                                nickNameMessage = findViewById(R.id.create_button);
                                 String nickName = nickNameMessage.getText().toString();
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
     public void displayToast(String text){
-        Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawer.closeDrawer(GravityCompat.START);
                 displayToast(getString(R.string.chose_share));
                 return true;
-                case R.id.send:
+            case R.id.send:
                 // Handle the send action (for now display a toast).
                 drawer.closeDrawer(GravityCompat.START);
                 displayToast(getString(R.string.chose_send));

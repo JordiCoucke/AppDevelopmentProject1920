@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DareInput"></activity>
+        <activity android:name=".RoomCreator"
+            android:label="Create Room"
+            android:parentActivityName=".MainActivity">
+
+        </activity>
+        <activity android:name=".DareInput" />
         <activity
             android:name=".DatabaseConnected"
             android:label="Waiting_for_players..."
