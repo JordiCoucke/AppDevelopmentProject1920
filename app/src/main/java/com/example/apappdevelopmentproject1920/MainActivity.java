@@ -1,6 +1,6 @@
 package com.example.apappdevelopmentproject1920;
 
-import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,18 +12,21 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ActionBarContainer;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.View;
@@ -36,21 +39,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import io.grpc.Context;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "MainActivity";
-    public static String userID = null;
+    public static String username = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        if(userID == null) {
-            Random r = new Random();
-            int rand = r.nextInt(99999) + 100000;
-            userID = String.valueOf(rand);
-        }
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -110,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
 
         EditText nickNameMessage;
-        nickNameMessage = findViewById(R.id.create_button);
+        nickNameMessage = findViewById(R.id.nickname_edittext);
         String nickName = nickNameMessage.getText().toString();
 
         Random r = new Random();
@@ -119,7 +115,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Map<String, Object> session = new HashMap<>();
         session.put("ID", rand);
-        session.put(userID, nickName);
+        session.put(username, nickName);
+
         String IDSessionName = "gameSessions";
         // Add a new document with a generated ID
         db.collection(IDSessionName).document("session")
@@ -153,31 +150,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             for (QueryDocumentSnapshot document : task.getResult())
                             {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                String[] IDArray = new String[document.getData().size()];
+                                String[] DataArray = new String[document.getData().size()];
 
                                 EditText codeMessage;
-                                codeMessage = findViewById(R.id.editText2);
+                                codeMessage = findViewById(R.id.sessioncode_edittext);
                                 String sessionCode = codeMessage.getText().toString();
 
 
                                 EditText nickNameMessage;
-                                nickNameMessage = findViewById(R.id.create_button);
+                                nickNameMessage = findViewById(R.id.nicknamejoin_edittext);
                                 String nickName = nickNameMessage.getText().toString();
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                DocumentReference addNickName = db.collection("gameSessions").document("session");
+                                DocumentReference add = db.collection("gameSessions").document("session");
 
 
                                 int i = 0;
                                 for (Object o: document.getData().values())
                                 {
-                                    IDArray[i] = o.toString();
-                                    if(sessionCode.equals(IDArray[i]))
+                                    DataArray[i] = o.toString();
+                                    if(sessionCode.equals(DataArray[i]))
                                     {
+                                        int j = 0;
+                                        if(username == "username")
+                                        {
+
+                                            while(document.get("username"+String.valueOf(j)) != null)
+                                            {
+                                                j++;
+                                            }
+                                            username+=j;
+                                        }
                                         Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
                                         startActivity(intent);
-                                        addNickName
-                                                .update(userID,nickName );
+                                        add.update(username,nickName );
                                     }
                                     i++;
                                 }
@@ -191,12 +197,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                 });
-
-
-
     }
+
+
     public void displayToast(String text){
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
