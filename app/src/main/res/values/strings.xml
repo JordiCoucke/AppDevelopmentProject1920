@@ -5,7 +5,7 @@
     <string name="app_title">Expedition Jordinson</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="chose_send">Selected Send</string>
+    <string name="chose_settings">Selected Settings</string>
     <string name="chose_share">Selected Share</string>
     <string name="chose_info">Selected Info</string>
     <string name="chose_profile">Selected Profile</string>

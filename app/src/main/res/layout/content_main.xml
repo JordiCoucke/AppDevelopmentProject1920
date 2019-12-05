@@ -13,17 +13,6 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="322dp"
-        android:layout_height="239dp"
-        android:contentDescription="@string/titleimage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/projecttitle" />
-
     <Button
         android:id="@+id/create_button"
         android:layout_width="wrap_content"
