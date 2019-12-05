@@ -37,17 +37,17 @@ import java.util.Map;
 import java.util.Random;
 
 import io.grpc.Context;
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
     public static String userID = null;
     private DrawerLayout drawer;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(userID == null) {
+        if (userID == null) {
             Random r = new Random();
             int rand = r.nextInt(99999) + 100000;
             userID = String.valueOf(rand);
@@ -73,8 +73,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setNavigationItemSelectedListener(this);
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new HomeFragment()).commit();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new HomeFragment()).commit();
+        }
+
     }
 
     @Override
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer((GravityCompat.START));
         } else {
             super.onBackPressed();
@@ -109,8 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void HostSession(final View view)
-    {
+    public void HostSession(final View view) {
 
         EditText nickNameMessage;
         nickNameMessage = findViewById(R.id.nickname_edittext);
@@ -136,15 +138,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception e)
-                    {
+                    public void onFailure(@NonNull Exception e) {
                         //incase of failure debugging
                     }
                 });
     }
 
-    public void JoinSession(final View view)
-    {
+    public void JoinSession(final View view) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("gameSessions")
@@ -153,8 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult())
-                            {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 String[] IDArray = new String[document.getData().size()];
 
@@ -172,23 +171,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
                                 int i = 0;
-                                for (Object o: document.getData().values())
-                                {
+                                for (Object o : document.getData().values()) {
                                     IDArray[i] = o.toString();
-                                    if(sessionCode.equals(IDArray[i]))
-                                    {
+                                    if (sessionCode.equals(IDArray[i])) {
                                         Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
                                         startActivity(intent);
                                         addNickName
-                                                .update(userID,nickName );
+                                                .update(userID, nickName);
                                     }
                                     i++;
                                 }
 
                             }
-                        }
-                        else
-                            {
+                        } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
                     }
@@ -196,9 +191,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
 
 
-
     }
-    public void displayToast(String text){
+
+    public void displayToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
