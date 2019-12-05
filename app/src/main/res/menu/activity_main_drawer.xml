@@ -16,22 +16,18 @@
             android:id="@+id/profile"
             android:icon="@drawable/addplayer"
             android:title="Profile" />
-        <item
-            android:id="@+id/info"
-            android:icon="@drawable/addplayer"
-            android:title="Info" />
     </group>
 
-    <item android:title="Communication">
+    <item android:title="">
         <menu>
             <item
-                android:id="@+id/share"
+                android:id="@+id/info"
                 android:icon="@drawable/addplayer"
-                android:title="Share" />
+                android:title="Info" />
             <item
-                android:id="@+id/send"
+                android:id="@+id/settings"
                 android:icon="@drawable/addplayer"
-                android:title="Send" />
+                android:title="Settings" />
         </menu>
     </item>
 
