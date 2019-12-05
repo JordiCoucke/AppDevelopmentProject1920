@@ -40,6 +40,7 @@ import io.grpc.Context;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "MainActivity";
     public static String userID = null;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,17 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        fab.setImageResource(R.drawable.addplayer);
-        DrawerLayout drawer =
-                findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle =
                 new ActionBarDrawerToggle(this, drawer, toolbar,
                         R.string.navigation_drawer_open,
@@ -81,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new HomeFragment()).commit();
     }
 
     @Override
@@ -88,6 +82,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer((GravityCompat.START));
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
 
         EditText nickNameMessage;
-        nickNameMessage = findViewById(R.id.create_button);
+        nickNameMessage = findViewById(R.id.nickname_edittext);
         String nickName = nickNameMessage.getText().toString();
 
         Random r = new Random();
@@ -161,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
                                 EditText nickNameMessage;
-                                nickNameMessage = findViewById(R.id.create_button);
+                                nickNameMessage = findViewById(R.id.nickname_edittext);
                                 String nickName = nickNameMessage.getText().toString();
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -206,36 +209,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.home:
                 // Handle the camera import action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new HomeFragment()).commit();
                 displayToast(getString(R.string.chose_home));
-                return true;
+                break;
             case R.id.rooms:
                 // Handle the gallery action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new RoomsFragment()).commit();
                 displayToast(getString(R.string.chose_rooms));
-                return true;
+                break;
             case R.id.profile:
                 // Handle the slideshow action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
+
                 displayToast(getString(R.string.chose_profile));
-                return true;
+                break;
             case R.id.info:
                 // Handle the tools action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
+
                 displayToast(getString(R.string.chose_info));
-                return true;
-            case R.id.share:
-                // Handle the share action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
-                displayToast(getString(R.string.chose_share));
-                return true;
-            case R.id.send:
+                break;
+            case R.id.settings:
                 // Handle the send action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
-                displayToast(getString(R.string.chose_send));
-                return true;
-            default:
-                return false;
+
+                displayToast(getString(R.string.chose_settings));
+                break;
         }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
