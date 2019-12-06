@@ -228,6 +228,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 displayToast(getString(R.string.chose_profile));
                 break;
+            case R.id.tests:
+                // Handle the slideshow action (for now display a toast).
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new TestsFragment()).commit();
+                displayToast(getString(R.string.chose_tests));
+                break;
             case R.id.info:
                 // Handle the tools action (for now display a toast).
 

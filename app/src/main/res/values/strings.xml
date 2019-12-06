@@ -11,6 +11,7 @@
     <string name="chose_profile">Selected Profile</string>
     <string name="chose_rooms">Selected Rooms</string>
     <string name="chose_home">Selected Home</string>
+    <string name="chose_tests">Selected Tests</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

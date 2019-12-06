@@ -16,6 +16,10 @@
             android:id="@+id/profile"
             android:icon="@drawable/addplayer"
             android:title="Profile" />
+        <item
+            android:id="@+id/tests"
+            android:icon="@drawable/addplayer"
+            android:title="Tests" />
     </group>
 
     <item android:title="">
