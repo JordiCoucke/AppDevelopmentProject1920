@@ -88,7 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer((GravityCompat.START));
-        } else {
+        } else if(getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        }
+        else {
             super.onBackPressed();
         }
     }
@@ -107,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
     public void HostSession(final View view) {
@@ -143,62 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
     }
 
-    public void JoinSession(final View view) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("gameSessions")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                String[] DataArray = new String[document.getData().size()];
-
-                                EditText codeMessage;
-                                codeMessage = findViewById(R.id.sessioncode_edittext);
-                                String sessionCode = codeMessage.getText().toString();
-
-
-                                EditText nickNameMessage;
-                                nickNameMessage = findViewById(R.id.nicknamejoin_edittext);
-                                String nickName = nickNameMessage.getText().toString();
-
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                DocumentReference add = db.collection("gameSessions").document("session");
-
-
-                                int i = 0;
-                                for (Object o: document.getData().values())
-                                {
-                                    DataArray[i] = o.toString();
-                                    if(sessionCode.equals(DataArray[i]))
-                                    {
-                                        int j = 0;
-                                        if( username.equals("username") )
-                                        {
-                                            while(document.get("username"+String.valueOf(j)) != null)
-                                            {
-                                                j++;
-                                            }
-                                            username+=j;
-                                        }
-                                        Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
-                                        add.update(username,nickName );
-                                        startActivity(intent);
-                                    }
-                                    i++;
-                                }
-
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-
-                });
-    }
 
 
     public void displayToast(String text) {
@@ -246,5 +196,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void LaunchRoomCreate(View view) {
+        Intent intent = new Intent(view.getContext(), RoomCreator.class);
+        startActivity(intent);
+    }
+
+    public void LaunchRoomJoin(View view) {
+        Intent intent = new Intent(view.getContext(), RoomJoin.class);
+        startActivity(intent);
     }
 }
