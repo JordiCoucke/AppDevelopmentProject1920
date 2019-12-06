@@ -44,7 +44,6 @@ import io.grpc.Context;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
     public static String username = "username";
-    public static String userID = null;
     private DrawerLayout drawer;
 
     @Override
@@ -122,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Map<String, Object> session = new HashMap<>();
         session.put("ID", rand);
+        username+= "0";
         session.put(username, nickName);
 
         String IDSessionName = "gameSessions";
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
                                 EditText nickNameMessage;
-                                nickNameMessage = findViewById(R.id.nickname_edittext);
+                                nickNameMessage = findViewById(R.id.nicknamejoin_edittext);
                                 String nickName = nickNameMessage.getText().toString();
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -176,9 +176,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     if(sessionCode.equals(DataArray[i]))
                                     {
                                         int j = 0;
-                                        if(username == "username")
+                                        if( username.equals("username") )
                                         {
-
                                             while(document.get("username"+String.valueOf(j)) != null)
                                             {
                                                 j++;
@@ -186,8 +185,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                             username+=j;
                                         }
                                         Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
-                                        startActivity(intent);
                                         add.update(username,nickName );
+                                        startActivity(intent);
                                     }
                                     i++;
                                 }
@@ -200,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 });
     }
-    
+
 
     public void displayToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();

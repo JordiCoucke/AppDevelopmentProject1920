@@ -44,20 +44,6 @@ public class DatabaseConnected extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final DocumentReference docRef = db.collection("gameSessions").document("session");
 
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
-        {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task)
-            {
-                if (task.isSuccessful())
-                {
-                    DocumentSnapshot document = task.getResult();
-                    DocumentReference d = document.getReference();
-
-                }
-            }
-        });
-
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>()
         {
             @Override
@@ -70,10 +56,16 @@ public class DatabaseConnected extends AppCompatActivity {
 
                     setContentView(R.layout.activity_database_connected);
                     String[] names = new String[8];
-
-                    for (int i = 0; i < 8; i++)
+                    int i = 0;
+                    while(snapshot.contains("username"+i))
                     {
                         names[i] = snapshot.get("username"+i).toString();
+                        i++;
+                    }
+
+                    for ( i = 0; i < names.length; i++)
+                    {
+                        //names[i] = snapshot.get("username"+i).toString();
                         mWordList.addLast(names[i]);
                     }
                     mRecyclerView = findViewById(R.id.recyclerview);
