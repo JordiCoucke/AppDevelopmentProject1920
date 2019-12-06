@@ -1,6 +1,6 @@
 package com.example.apappdevelopmentproject1920;
 
-import android.content.Context;
+//import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -200,9 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 });
     }
-
-
-    }
+    
 
     public void displayToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
