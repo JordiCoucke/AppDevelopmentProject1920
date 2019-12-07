@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,15 +31,34 @@ import java.util.LinkedList;
 
 public class DatabaseConnected extends AppCompatActivity {
     private final LinkedList<String> mWordList = new LinkedList<>();
-    public static String[] userList;
     private RecyclerView mRecyclerView;
     private WordListAdapter mAdapter;
+    public static String ID;
+    public static String nickName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DBListen(this);
+        setContentView(R.layout.activity_database_connected);
+        Intent intent=getIntent();
+        nickName = intent.getStringExtra("username");
+        ID = intent.getStringExtra("ID");
+
+        final TextView showTextViewRoomID = (TextView) findViewById(R.id.ShowTextViewRoomID);
+
+        ((Activity) this).runOnUiThread(new Runnable() {
+            @Override
+            public void run()
+            {
+                showTextViewRoomID.setText(ID);
+                showTextViewRoomID.invalidate();
+            }
+        });
     }
+
+
+
 
     public void DBListen(final Context c) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -77,5 +97,10 @@ public class DatabaseConnected extends AppCompatActivity {
         });
     }
 
+    public void GoToDareInput(View view)
+    {
+        Intent intent = new Intent(view.getContext(), DareInput.class);
+        startActivity(intent);
+    }
 }
 

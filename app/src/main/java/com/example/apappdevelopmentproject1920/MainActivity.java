@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String nickName = nickNameMessage.getText().toString();
 
         Random r = new Random();
-        int rand = r.nextInt(899) + 1000;
+        final int rand = r.nextInt(899) + 1000;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> session = new HashMap<>();
@@ -132,6 +132,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onSuccess(Void avoid) {
                         Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
+                        intent.putExtra("username",username);
+                        intent.putExtra("ID",getString(rand));
                         startActivity(intent);
                     }
                 })
@@ -146,9 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void JoinSession(final View view) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("gameSessions")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("gameSessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -186,6 +186,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         }
                                         Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
                                         add.update(username,nickName );
+                                        intent.putExtra("username",username);
+                                        intent.putExtra("ID",sessionCode);
                                         startActivity(intent);
                                     }
                                     i++;
