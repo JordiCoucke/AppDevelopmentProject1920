@@ -6,20 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class RoomCreator extends AppCompatActivity {
+public class WaitingForOtherPlayers extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room_creator);
+        setContentView(R.layout.activity_waiting_for_other_players);
     }
 
-    public void CreateRoom(View view) {
-
-    }
-
-    private  void LaunchWaitingForOtherPlayers(View view){
-        Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
+    public void LaunchDareInput(View view) {
+        Intent intent = new Intent(view.getContext(), DareInput.class);
         startActivity(intent);
     }
 }
