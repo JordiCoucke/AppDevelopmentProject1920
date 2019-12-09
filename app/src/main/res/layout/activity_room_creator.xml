@@ -6,17 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".RoomCreator">
 
-    <Button
-        android:id="@+id/create_button"
+    <TextView
+        android:id="@+id/roomname_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Create"
-        android:onClick="CreateRoom"
+        android:layout_marginTop="32dp"
+        android:text="Room Name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sessiontype_radioGroup" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/roomname_edittext"
@@ -30,8 +29,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/roomname_label" />
 
+    <TextView
+        android:id="@+id/nickname_host_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Your Nickname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roomname_edittext" />
+
     <EditText
-        android:id="@+id/nickname_edittext"
+        android:id="@+id/nickname_host_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -40,10 +50,21 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nickname_label" />
+        app:layout_constraintTop_toBottomOf="@+id/nickname_host_label" />
+
+    <TextView
+        android:id="@+id/sessiontype_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Session type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nickname_host_edittext" />
 
     <RadioGroup
-        android:id="@+id/sessiontype_radioGroup"
+        android:id="@+id/sessiontype_host_radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -70,37 +91,18 @@
             android:text="Invisible" />
     </RadioGroup>
 
-    <TextView
-        android:id="@+id/roomname_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:text="Room Name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/nickname_label"
+    <Button
+        android:id="@+id/createsession_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
-        android:text="Your Nickname"
+        android:text="Create"
+        android:onClick="CreateRoom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/roomname_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/sessiontype_host_radioGroup" />
 
-    <TextView
-        android:id="@+id/sessiontype_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Session type"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nickname_edittext" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

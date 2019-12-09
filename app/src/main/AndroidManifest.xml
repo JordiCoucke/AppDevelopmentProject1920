@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RoomCreator"
+        <activity android:name=".RoomJoin"></activity>
+        <activity
+            android:name=".RoomCreator"
             android:label="Create Room"
-            android:parentActivityName=".MainActivity">
-
-        </activity>
+            android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".DareInput" />
         <activity
             android:name=".DatabaseConnected"

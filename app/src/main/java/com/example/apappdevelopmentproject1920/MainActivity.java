@@ -112,87 +112,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void HostSession(final View view) {
-
-        EditText nickNameMessage;
-        nickNameMessage = findViewById(R.id.nickname_edittext);
-        String nickName = nickNameMessage.getText().toString();
-
-        Random r = new Random();
-        int rand = r.nextInt(899) + 1000;
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        Map<String, Object> session = new HashMap<>();
-        session.put("ID", rand);
-        session.put(userID, nickName);
-        String IDSessionName = "gameSessions";
-        // Add a new document with a generated ID
-        db.collection(IDSessionName).document("session")
-                .set(session)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void avoid) {
-                        Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
-                        startActivity(intent);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //incase of failure debugging
-                    }
-                });
-    }
-
-    public void JoinSession(final View view) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("gameSessions")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                String[] IDArray = new String[document.getData().size()];
-
-                                EditText codeMessage;
-                                codeMessage = findViewById(R.id.editText2);
-                                String sessionCode = codeMessage.getText().toString();
-
-
-                                EditText nickNameMessage;
-                                nickNameMessage = findViewById(R.id.nickname_edittext);
-                                String nickName = nickNameMessage.getText().toString();
-
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                DocumentReference addNickName = db.collection("gameSessions").document("session");
-
-
-                                int i = 0;
-                                for (Object o : document.getData().values()) {
-                                    IDArray[i] = o.toString();
-                                    if (sessionCode.equals(IDArray[i])) {
-                                        Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
-                                        startActivity(intent);
-                                        addNickName
-                                                .update(userID, nickName);
-                                    }
-                                    i++;
-                                }
-
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-
-                });
-
-
-    }
-
     public void displayToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
@@ -238,5 +157,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void LaunchHostSession(View view){
+        Intent intent = new Intent(view.getContext(), RoomCreator.class);
+        startActivity(intent);
+    }
+
+    public void LaunchJoinSession(View view){
+        Intent intent = new Intent(view.getContext(), RoomJoin.class);
+        startActivity(intent);
     }
 }
