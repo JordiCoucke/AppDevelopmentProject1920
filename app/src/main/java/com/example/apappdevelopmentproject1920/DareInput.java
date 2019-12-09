@@ -81,13 +81,10 @@ public class DareInput extends AppCompatActivity {
 
     public void PlayerIsReady(final View view)
     {
-        EditText editTextDare1 = findViewById(R.id.editText0);
-        EditText editTextDare2 = findViewById(R.id.editText1);
-        EditText editTextDare3 = findViewById(R.id.editText2);
-
-        final String dare1 = editTextDare1.getText().toString();
-        final String dare2 = editTextDare2.getText().toString();
-        final String dare3 = editTextDare3.getText().toString();
+        final String dare1 = InputDare1.getText().toString();
+        final String dare2 = InputDare2.getText().toString();
+        final String dare3 = InputDare3.getText().toString();
+        final String dare4 = InputDare4.getText().toString();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -110,6 +107,8 @@ public class DareInput extends AppCompatActivity {
                         add.update("dare"+i,dare2);
                         i++;
                         add.update("dare"+i,dare3);
+                        i++;
+                        add.update("dare"+i,dare4);
                         Intent intent = new Intent(view.getContext(), GameMain.class);
                         startActivity(intent);
                     }

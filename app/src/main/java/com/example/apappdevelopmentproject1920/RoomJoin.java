@@ -77,7 +77,7 @@ public class RoomJoin extends AppCompatActivity {
                                 for (Object o : document.getData().values()) {
                                     IDArray[i] = o.toString();
                                     if (sessionCode.equals(IDArray[i])) {
-                                        Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
+                                        Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
                                         startActivity(intent);
                                         addNickName
                                                 .update(userID, nickName);

@@ -69,7 +69,7 @@ public class RoomCreator extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void avoid) {
-                        Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
+                        Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
                         startActivity(intent);
                     }
                 })

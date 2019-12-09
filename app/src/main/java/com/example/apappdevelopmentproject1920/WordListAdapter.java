@@ -54,7 +54,7 @@ public class WordListAdapter extends
                 parent, false);
         return new WordViewHolder(mItemView, this);
     }
-²é
+
     @Override
     public void onBindViewHolder(WordViewHolder holder, int position) {
         String mCurrent = mWordList.get(position);
