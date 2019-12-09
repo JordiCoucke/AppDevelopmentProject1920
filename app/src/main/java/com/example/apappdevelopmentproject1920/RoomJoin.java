@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class RoomJoin extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public static String userID = null;
+    public static String username = "username";
     private EditText nickNameInput;
     private EditText sessionCodeInput;
 
@@ -54,45 +55,57 @@ public class RoomJoin extends AppCompatActivity {
     public void JoinSession(final View view) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("gameSessions")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                String[] IDArray = new String[document.getData().size()];
+        db.collection("gameSessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        String[] DataArray = new String[document.getData().size()];
+
+                        String sessionCode = sessionCodeInput.getText().toString();
+                        ;
+                        String nickName = nickNameInput.getText().toString();
+
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        DocumentReference add = db.collection("gameSessions").document("session");
 
 
-                                String sessionCode = sessionCodeInput.getText().toString();
+                        int i = 0;
+                        for (Object o: document.getData().values())
+                        {
+                            DataArray[i] = o.toString();
+                            if(sessionCode.equals(DataArray[i]))
+                            {
+                                int j = 1;
+                                if( username.equals("username") )
+                                {
+                                    int userCount = Integer.parseInt( document.get("usercount").toString());
+                                    userCount++;
+                                    add.update("usercount",userCount);
 
-                                String nickName = nickNameInput.getText().toString();
-
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                DocumentReference addNickName = db.collection("gameSessions").document("session");
-
-
-                                int i = 0;
-                                for (Object o : document.getData().values()) {
-                                    IDArray[i] = o.toString();
-                                    if (sessionCode.equals(IDArray[i])) {
-                                        Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
-                                        startActivity(intent);
-                                        addNickName
-                                                .update(userID, nickName);
+                                    while(document.get("username"+String.valueOf(j)) != null)
+                                    {
+                                        j++;
                                     }
-                                    i++;
+                                    username+=j;
                                 }
-
+                                Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
+                                add.update(username,nickName );
+                                intent.putExtra("username",username);
+                                intent.putExtra("ID",sessionCode);
+                                intent.putExtra("WasJustCreated",false);
+                                startActivity(intent);
                             }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
+                            i++;
                         }
+
                     }
+                } else {
+                    Log.w(TAG, "Error getting documents.", task.getException());
+                }
+            }
 
-                });
-
-
+        });
     }
 }
