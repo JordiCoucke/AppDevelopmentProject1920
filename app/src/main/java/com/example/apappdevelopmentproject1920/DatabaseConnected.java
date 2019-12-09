@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.protobuf.StringValue;
 
 import java.util.LinkedList;
 
@@ -43,9 +44,17 @@ public class DatabaseConnected extends AppCompatActivity {
         setContentView(R.layout.activity_database_connected);
         Intent intent=getIntent();
         nickName = intent.getStringExtra("username");
-        ID = intent.getStringExtra("ID");
+        if(intent.getBooleanExtra("WasJustCreated", true))
+        {
+            int iId = intent.getIntExtra("ID",0);
+            ID = String.valueOf( iId);
+        }
+        else {
+            ID = intent.getStringExtra("ID");
+        }
 
         final TextView showTextViewRoomID = (TextView) findViewById(R.id.ShowTextViewRoomID);
+
 
         ((Activity) this).runOnUiThread(new Runnable() {
             @Override
@@ -56,9 +65,6 @@ public class DatabaseConnected extends AppCompatActivity {
             }
         });
     }
-
-
-
 
     public void DBListen(final Context c) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -76,14 +82,14 @@ public class DatabaseConnected extends AppCompatActivity {
 
                     setContentView(R.layout.activity_database_connected);
                     String[] names = new String[8];
-                    int i = 0;
+                    int i = 1;
                     while(snapshot.contains("username"+i))
                     {
                         names[i] = snapshot.get("username"+i).toString();
                         i++;
                     }
 
-                    for ( i = 0; i < names.length; i++)
+                    for ( i = 1; i < names.length; i++)
                     {
                         //names[i] = snapshot.get("username"+i).toString();
                         mWordList.addLast(names[i]);

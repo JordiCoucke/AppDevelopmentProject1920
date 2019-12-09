@@ -121,8 +121,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Map<String, Object> session = new HashMap<>();
         session.put("ID", rand);
-        username+= "0";
+        username+= "1";
         session.put(username, nickName);
+        session.put("usercount", 1);
 
         String IDSessionName = "gameSessions";
         // Add a new document with a generated ID
@@ -133,7 +134,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onSuccess(Void avoid) {
                         Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
                         intent.putExtra("username",username);
-                        intent.putExtra("ID",getString(rand));
+                        intent.putExtra("ID",rand);
+                        intent.putExtra("WasJustCreated",true);
                         startActivity(intent);
                     }
                 })
@@ -175,9 +177,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     DataArray[i] = o.toString();
                                     if(sessionCode.equals(DataArray[i]))
                                     {
-                                        int j = 0;
+                                        int j = 1;
                                         if( username.equals("username") )
                                         {
+                                            int userCount = Integer.parseInt( document.get("usercount").toString());
+                                            userCount++;
+                                            add.update("usercount",userCount);
+
                                             while(document.get("username"+String.valueOf(j)) != null)
                                             {
                                                 j++;
@@ -188,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         add.update(username,nickName );
                                         intent.putExtra("username",username);
                                         intent.putExtra("ID",sessionCode);
+                                        intent.putExtra("WasJustCreated",false);
                                         startActivity(intent);
                                     }
                                     i++;
