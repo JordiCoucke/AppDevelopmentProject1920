@@ -19,6 +19,7 @@ import java.util.Random;
 public class RoomCreator extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public static String userID = null;
+    private static String username = "username";
     private EditText nickNameInput;
     private EditText roomNameInput;
 
@@ -52,16 +53,18 @@ public class RoomCreator extends AppCompatActivity {
     }
 
     public void HostSession(final View view) {
-
         String nickName = nickNameInput.getText().toString();
 
         Random r = new Random();
-        int rand = r.nextInt(899) + 1000;
+        final int rand = r.nextInt(899) + 1000;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> session = new HashMap<>();
         session.put("ID", rand);
-        session.put(userID, nickName);
+        username+= "1";
+        session.put(username, nickName);
+        session.put("usercount", 1);
+
         String IDSessionName = "gameSessions";
         // Add a new document with a generated ID
         db.collection(IDSessionName).document("session")
@@ -70,6 +73,9 @@ public class RoomCreator extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void avoid) {
                         Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
+                        intent.putExtra("username",username);
+                        intent.putExtra("ID",rand);
+                        intent.putExtra("WasJustCreated",true);
                         startActivity(intent);
                     }
                 })

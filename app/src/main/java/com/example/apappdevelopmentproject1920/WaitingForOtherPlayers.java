@@ -30,9 +30,11 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DBListen(this);
         setContentView(R.layout.activity_waiting_for_other_players);
-        Intent intent=getIntent();
+
+        DBListen(this);
+
+        Intent intent = getIntent();
         nickName = intent.getStringExtra("username");
         if(intent.getBooleanExtra("WasJustCreated", true))
         {
@@ -84,7 +86,7 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
                         //names[i] = snapshot.get("username"+i).toString();
                         mWordList.addLast(names[i]);
                     }
-                    mRecyclerView = findViewById(R.id.recyclerview);
+                    mRecyclerView = findViewById(R.id.playerlist_recyclerview);
                     mAdapter = new WordListAdapter(c, mWordList);
                     mRecyclerView.setAdapter(mAdapter);
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(c));

@@ -94,6 +94,7 @@ public class DatabaseConnected extends AppCompatActivity {
                         //names[i] = snapshot.get("username"+i).toString();
                         mWordList.addLast(names[i]);
                     }
+
                     mRecyclerView = findViewById(R.id.recyclerview);
                     mAdapter = new WordListAdapter(c, mWordList);
                     mRecyclerView.setAdapter(mAdapter);
