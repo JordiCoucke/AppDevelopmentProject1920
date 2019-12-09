@@ -31,7 +31,7 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DBListen(this);
-        setContentView(R.layout.activity_database_connected);
+        setContentView(R.layout.activity_waiting_for_other_players);
         Intent intent=getIntent();
         nickName = intent.getStringExtra("username");
         if(intent.getBooleanExtra("WasJustCreated", true))
@@ -43,7 +43,7 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
             ID = intent.getStringExtra("ID");
         }
 
-        final TextView showTextViewRoomID = (TextView) findViewById(R.id.ShowTextViewRoomID);
+        final TextView showTextViewRoomID = (TextView) findViewById(R.id.textView_sessioncode);
 
 
         ((Activity) this).runOnUiThread(new Runnable() {
@@ -84,7 +84,7 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
                         //names[i] = snapshot.get("username"+i).toString();
                         mWordList.addLast(names[i]);
                     }
-                    mRecyclerView = findViewById(R.id.playerlist_recyclerview);
+                    mRecyclerView = findViewById(R.id.recyclerview);
                     mAdapter = new WordListAdapter(c, mWordList);
                     mRecyclerView.setAdapter(mAdapter);
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(c));
