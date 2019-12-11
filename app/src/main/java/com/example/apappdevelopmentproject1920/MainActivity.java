@@ -170,36 +170,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                                 DocumentReference add = db.collection("gameSessions").document("session");
 
+                                if (document.get("username8") == null) {
+                                    int i = 0;
+                                    for (Object o : document.getData().values()) {
+                                        DataArray[i] = o.toString();
+                                        if (sessionCode.equals(DataArray[i])) {
+                                            int j = 1;
+                                            if (username.equals("username")) {
+                                                int userCount = Integer.parseInt(document.get("usercount").toString());
+                                                userCount++;
+                                                add.update("usercount", userCount);
 
-                                int i = 0;
-                                for (Object o: document.getData().values())
-                                {
-                                    DataArray[i] = o.toString();
-                                    if(sessionCode.equals(DataArray[i]))
-                                    {
-                                        int j = 1;
-                                        if( username.equals("username") )
-                                        {
-                                            int userCount = Integer.parseInt( document.get("usercount").toString());
-                                            userCount++;
-                                            add.update("usercount",userCount);
-
-                                            while(document.get("username"+String.valueOf(j)) != null)
-                                            {
-                                                j++;
+                                                while (document.get("username" + String.valueOf(j)) != null) {
+                                                    j++;
+                                                }
+                                                username += j;
                                             }
-                                            username+=j;
+                                            Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
+                                            add.update(username, nickName);
+                                            intent.putExtra("username", username);
+                                            intent.putExtra("ID", sessionCode);
+                                            intent.putExtra("WasJustCreated", false);
+                                            startActivity(intent);
                                         }
-                                        Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
-                                        add.update(username,nickName );
-                                        intent.putExtra("username",username);
-                                        intent.putExtra("ID",sessionCode);
-                                        intent.putExtra("WasJustCreated",false);
-                                        startActivity(intent);
+                                        i++;
                                     }
-                                    i++;
-                                }
 
+                                }
                             }
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());

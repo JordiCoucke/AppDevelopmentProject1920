@@ -81,7 +81,7 @@ public class DatabaseConnected extends AppCompatActivity {
                 {
 
                     setContentView(R.layout.activity_database_connected);
-                    String[] names = new String[8];
+                    String[] names = new String[9];
                     int i = 1;
                     while(snapshot.contains("username"+i))
                     {
