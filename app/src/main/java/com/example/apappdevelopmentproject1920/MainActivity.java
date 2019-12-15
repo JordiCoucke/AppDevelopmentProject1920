@@ -198,7 +198,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
                     }

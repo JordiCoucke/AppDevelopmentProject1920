@@ -36,7 +36,7 @@ public class DatabaseConnected extends AppCompatActivity {
     private WordListAdapter mAdapter;
     public static String ID;
     public static String nickName;
-
+    private TextView showTextViewRoomID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,18 +52,6 @@ public class DatabaseConnected extends AppCompatActivity {
         else {
             ID = intent.getStringExtra("ID");
         }
-
-        final TextView showTextViewRoomID = (TextView) findViewById(R.id.ShowTextViewRoomID);
-
-
-        ((Activity) this).runOnUiThread(new Runnable() {
-            @Override
-            public void run()
-            {
-                showTextViewRoomID.setText(ID);
-                showTextViewRoomID.invalidate();
-            }
-        });
     }
 
     public void DBListen(final Context c) {
@@ -98,6 +86,8 @@ public class DatabaseConnected extends AppCompatActivity {
                     mAdapter = new WordListAdapter(c, mWordList);
                     mRecyclerView.setAdapter(mAdapter);
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(c));
+                    showTextViewRoomID = (TextView) findViewById(R.id.ShowTextViewRoomID);
+                    showTextViewRoomID.setText(ID);
                 }
             }
         });
