@@ -51,4 +51,15 @@
         app:layout_constraintTop_toBottomOf="@+id/WinnerLabel"
         app:layout_constraintVertical_bias="0.14" />
 
+    <Button
+        android:id="@+id/EndGameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="EndGameAndReturn"
+        app:layout_constraintTop_toBottomOf="@+id/winner" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

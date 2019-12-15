@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -42,7 +43,6 @@ import java.util.Random;
 import io.grpc.Context;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "MainActivity";
     public static String username = "username";
     private DrawerLayout drawer;
 
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String nickName = nickNameMessage.getText().toString();
 
         Random r = new Random();
-        final int rand = r.nextInt(899) + 1000;
+        final int rand = r.nextInt(8999) + 1000;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> session = new HashMap<>();
@@ -126,8 +126,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         session.put("usercount", 1);
 
         String IDSessionName = "gameSessions";
-        // Add a new document with a generated ID
-        db.collection(IDSessionName).document("session")
+        final String collName = PickDocumentName(rand);
+        db.collection(IDSessionName).document(collName)
                 .set(session)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         intent.putExtra("username",username);
                         intent.putExtra("ID",rand);
                         intent.putExtra("WasJustCreated",true);
+                        intent.putExtra("SessionName", collName);
                         startActivity(intent);
                     }
                 })
@@ -155,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
                                 String[] DataArray = new String[document.getData().size()];
 
                                 EditText codeMessage;
@@ -168,7 +168,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 String nickName = nickNameMessage.getText().toString();
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                DocumentReference add = db.collection("gameSessions").document("session");
+                                final String collName = PickDocumentName(Integer.parseInt( sessionCode));
+                                DocumentReference add = db.collection("gameSessions").document(collName);
 
                                 if (document.get("username8") == null) {
                                     int i = 0;
@@ -191,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                             intent.putExtra("username", username);
                                             intent.putExtra("ID", sessionCode);
                                             intent.putExtra("WasJustCreated", false);
+                                            intent.putExtra("SessionName",collName);
                                             startActivity(intent);
                                         }
                                         i++;
@@ -198,9 +200,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                                 }
                             }
-                        }
-                        else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
                         }
                     }
 
@@ -253,5 +252,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private String PickDocumentName(int r)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String documentName = "session";
+
+        return documentName+r;
     }
 }

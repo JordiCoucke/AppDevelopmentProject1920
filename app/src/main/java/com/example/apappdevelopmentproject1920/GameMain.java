@@ -33,9 +33,10 @@ public class GameMain extends AppCompatActivity {
     private TextView RoundTextView;
     private TextView TurnTextView;
     private int timer;
+    private String SessionName;
     private static int userCount;
     private int TurnControl = 0;
-    private static final long TIMER_START_VALUE = 62000;
+    private static final long TIMER_START_VALUE = 61000;
     private long timeInMilliseconds = TIMER_START_VALUE;
     public boolean canVote = true;
     public static String[] dares;
@@ -48,6 +49,8 @@ public class GameMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_main);
+        Intent intent=getIntent();
+        SessionName = intent.getStringExtra("SessionName");
         timerTextView = (TextView) findViewById(R.id.timer);
         RoundTextView = (TextView) findViewById(R.id.PlayersRoundTV);
         TurnTextView = (TextView) findViewById(R.id.PlayersTurnTV);
@@ -69,7 +72,7 @@ public class GameMain extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            DocumentReference coll = db.collection("gameSessions").document("session");
+                            DocumentReference coll = db.collection("gameSessions").document(SessionName);
 
                             user[turn - 1]+=50;
                             coll.update("score:username" + turn, user[turn - 1]);
@@ -95,7 +98,7 @@ public class GameMain extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            DocumentReference coll = db.collection("gameSessions").document("session");
+                            DocumentReference coll = db.collection("gameSessions").document(SessionName);
 
                             user[turn - 1]+=0;
                             coll.update("score:username" + turn, user[turn - 1]);
@@ -121,7 +124,7 @@ public class GameMain extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            DocumentReference coll = db.collection("gameSessions").document("session");
+                            DocumentReference coll = db.collection("gameSessions").document(SessionName);
 
                             user[turn - 1]+=25;
                             coll.update("score:username" + turn, user[turn - 1]);
@@ -159,7 +162,7 @@ public class GameMain extends AppCompatActivity {
     }
 
     private void updateTimerText() {
-        int seconds = (int) (timeInMilliseconds / 1000) % 60;
+        int seconds = (int) (timeInMilliseconds / 1000) % 61;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d", seconds);
         timerTextView.setText(timeLeftFormatted);
     }
@@ -169,7 +172,7 @@ public class GameMain extends AppCompatActivity {
         canVote = true;
         if(userCount == turn)
         {
-            if(round == 1)
+            if(round == 3)
             {
                 ComparePlayerPoint();
             }
@@ -278,6 +281,7 @@ public class GameMain extends AppCompatActivity {
                 winner = String.valueOf(userNames[i+1]);
         }
         Intent intent = new Intent(this, GameOver.class);
+        intent.putExtra("SessionName",SessionName);
         intent.putExtra("winner", winner);
         startActivity(intent);
     }

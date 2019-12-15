@@ -17,11 +17,13 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class DareInput extends AppCompatActivity {
-
+    private String SessionName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dare_input);
+        Intent intent=getIntent();
+        SessionName = intent.getStringExtra("SessionName");
     }
 
     public void PlayerIsReady(final View view)
@@ -43,7 +45,7 @@ public class DareInput extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : task.getResult()) {
 
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        DocumentReference add = db.collection("gameSessions").document("session");
+                        DocumentReference add = db.collection("gameSessions").document(SessionName);
 
                         int i = 0;
                         while(document.contains("dare"+i))
@@ -56,6 +58,7 @@ public class DareInput extends AppCompatActivity {
                         i++;
                         add.update("dare"+i,dare3);
                         Intent intent = new Intent(view.getContext(), GameMain.class);
+                        intent.putExtra("SessionName",SessionName);
                         startActivity(intent);
                     }
                 }

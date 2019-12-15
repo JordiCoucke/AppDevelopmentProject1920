@@ -35,14 +35,16 @@ public class DatabaseConnected extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private WordListAdapter mAdapter;
     public static String ID;
+    public static String SessionName;
     public static String nickName;
     private TextView showTextViewRoomID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent=getIntent();
+        SessionName = intent.getStringExtra("SessionName");
         DBListen(this);
         setContentView(R.layout.activity_database_connected);
-        Intent intent=getIntent();
         nickName = intent.getStringExtra("username");
         if(intent.getBooleanExtra("WasJustCreated", true))
         {
@@ -56,7 +58,7 @@ public class DatabaseConnected extends AppCompatActivity {
 
     public void DBListen(final Context c) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final DocumentReference docRef = db.collection("gameSessions").document("session");
+        final DocumentReference docRef = db.collection("gameSessions").document(SessionName);
 
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>()
         {
@@ -79,7 +81,6 @@ public class DatabaseConnected extends AppCompatActivity {
 
                     for ( i = 1; i < names.length; i++)
                     {
-                        //names[i] = snapshot.get("username"+i).toString();
                         mWordList.addLast(names[i]);
                     }
                     mRecyclerView = findViewById(R.id.recyclerview);
@@ -96,6 +97,7 @@ public class DatabaseConnected extends AppCompatActivity {
     public void GoToDareInput(View view)
     {
         Intent intent = new Intent(view.getContext(), DareInput.class);
+        intent.putExtra("SessionName",SessionName);
         startActivity(intent);
     }
 }
