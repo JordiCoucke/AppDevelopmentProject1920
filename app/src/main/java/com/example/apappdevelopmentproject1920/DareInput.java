@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class DareInput extends AppCompatActivity {
+    private String SessionName;
     private EditText InputDare1;
     private EditText InputDare2;
     private EditText InputDare3;
@@ -26,6 +27,8 @@ public class DareInput extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dare_input);
+        Intent intent=getIntent();
+        SessionName = intent.getStringExtra("SessionName");
 
         InputDare1 = findViewById(R.id.editText_dare1);
         InputDare2 = findViewById(R.id.editText_dare2);
@@ -95,7 +98,7 @@ public class DareInput extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : task.getResult()) {
 
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        DocumentReference add = db.collection("gameSessions").document("session");
+                        DocumentReference add = db.collection("gameSessions").document(SessionName);
 
                         int i = 0;
                         while(document.contains("dare"+i))
@@ -110,6 +113,7 @@ public class DareInput extends AppCompatActivity {
                         i++;
                         add.update("dare"+i,dare4);
                         Intent intent = new Intent(view.getContext(), GameMain.class);
+                        intent.putExtra("SessionName",SessionName);
                         startActivity(intent);
                     }
                 }

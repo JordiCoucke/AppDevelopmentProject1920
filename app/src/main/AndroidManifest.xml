@@ -14,7 +14,7 @@
         <activity
             android:name=".RoomCreator"
             android:label="Create Room"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DareInput"
             android:label="DareInput"
@@ -23,6 +23,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.apappdevelopmentproject1920.DareInput" />
         </activity>
+
         <activity
             android:name=".GameMain"
             android:label="GameMain"
@@ -31,6 +32,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.apappdevelopmentproject1920.GameMain" />
         </activity>
+
+        <activity
+            android:name=".GameOver"
+            android:label="GameOver"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.apappdevelopmentproject1920.GameOver" />
+        </activity>
+
         <activity
             android:name=".DatabaseConnected"
             android:label="Waiting_for_players..."

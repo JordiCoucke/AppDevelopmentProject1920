@@ -35,14 +35,16 @@ public class DatabaseConnected extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private WordListAdapter mAdapter;
     public static String ID;
+    public static String SessionName;
     public static String nickName;
-
+    private TextView showTextViewRoomID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent=getIntent();
+        SessionName = intent.getStringExtra("SessionName");
         DBListen(this);
         setContentView(R.layout.activity_database_connected);
-        Intent intent=getIntent();
         nickName = intent.getStringExtra("username");
         if(intent.getBooleanExtra("WasJustCreated", true))
         {
@@ -52,23 +54,11 @@ public class DatabaseConnected extends AppCompatActivity {
         else {
             ID = intent.getStringExtra("ID");
         }
-
-        final TextView showTextViewRoomID = (TextView) findViewById(R.id.ShowTextViewRoomID);
-
-
-        ((Activity) this).runOnUiThread(new Runnable() {
-            @Override
-            public void run()
-            {
-                showTextViewRoomID.setText(ID);
-                showTextViewRoomID.invalidate();
-            }
-        });
     }
 
     public void DBListen(final Context c) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final DocumentReference docRef = db.collection("gameSessions").document("session");
+        final DocumentReference docRef = db.collection("gameSessions").document(SessionName);
 
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>()
         {
@@ -81,7 +71,7 @@ public class DatabaseConnected extends AppCompatActivity {
                 {
 
                     setContentView(R.layout.activity_database_connected);
-                    String[] names = new String[8];
+                    String[] names = new String[9];
                     int i = 1;
                     while(snapshot.contains("username"+i))
                     {
@@ -91,7 +81,6 @@ public class DatabaseConnected extends AppCompatActivity {
 
                     for ( i = 1; i < names.length; i++)
                     {
-                        //names[i] = snapshot.get("username"+i).toString();
                         mWordList.addLast(names[i]);
                     }
 
@@ -99,6 +88,8 @@ public class DatabaseConnected extends AppCompatActivity {
                     mAdapter = new WordListAdapter(c, mWordList);
                     mRecyclerView.setAdapter(mAdapter);
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(c));
+                    showTextViewRoomID = (TextView) findViewById(R.id.ShowTextViewRoomID);
+                    showTextViewRoomID.setText(ID);
                 }
             }
         });
@@ -107,6 +98,7 @@ public class DatabaseConnected extends AppCompatActivity {
     public void GoToDareInput(View view)
     {
         Intent intent = new Intent(view.getContext(), DareInput.class);
+        intent.putExtra("SessionName",SessionName);
         startActivity(intent);
     }
 }
