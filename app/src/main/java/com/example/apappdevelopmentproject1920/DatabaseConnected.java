@@ -7,11 +7,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -25,24 +27,46 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.protobuf.StringValue;
 
 import java.util.LinkedList;
 
 public class DatabaseConnected extends AppCompatActivity {
     private final LinkedList<String> mWordList = new LinkedList<>();
-    public static String[] userList;
     private RecyclerView mRecyclerView;
     private WordListAdapter mAdapter;
-
+    public static String ID;
+    public static String SessionName;
+    public static String nickName;
+    private TextView showTextViewRoomID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_database_connected);
+        Intent intent=getIntent();
+        SessionName = intent.getStringExtra("SessionName");
         DBListen(this);
+        //setContentView(R.layout.activity_database_connected);
+
+        nickName = intent.getStringExtra("username");
+        if(intent.getBooleanExtra("WasJustCreated", true))
+        {
+            int iId = intent.getIntExtra("ID",0);
+            ID = String.valueOf( iId);
+        }
+        else {
+            ID = intent.getStringExtra("ID");
+        }
+
+        if (!nickName.equals("username1")){
+            Button b = findViewById(R.id.launchDareInputbutton);
+            b.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void DBListen(final Context c) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final DocumentReference docRef = db.collection("gameSessions").document("session");
+        final DocumentReference docRef = db.collection("gameSessions").document(SessionName);
 
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>()
         {
@@ -53,29 +77,35 @@ public class DatabaseConnected extends AppCompatActivity {
 
                 if (snapshot != null && snapshot.exists())
                 {
-
-                    setContentView(R.layout.activity_database_connected);
-                    String[] names = new String[8];
-                    int i = 0;
+                    String[] names = new String[9];
+                    int i = 1;
                     while(snapshot.contains("username"+i))
                     {
                         names[i] = snapshot.get("username"+i).toString();
                         i++;
                     }
 
-                    for ( i = 0; i < names.length; i++)
+                    for ( i = 1; i < names.length; i++)
                     {
-                        //names[i] = snapshot.get("username"+i).toString();
                         mWordList.addLast(names[i]);
                     }
-                    mRecyclerView = findViewById(R.id.recyclerview);
+
+                    mRecyclerView = findViewById(R.id.playerlist_recyclerview);
                     mAdapter = new WordListAdapter(c, mWordList);
                     mRecyclerView.setAdapter(mAdapter);
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(c));
+                    showTextViewRoomID = (TextView) findViewById(R.id.textView_sessioncode);
+                    showTextViewRoomID.setText(ID);
                 }
             }
         });
     }
 
+    public void LaunchDareInput(View view)
+    {
+        Intent intent = new Intent(view.getContext(), DareInput.class);
+        intent.putExtra("SessionName",SessionName);
+        startActivity(intent);
+    }
 }
 

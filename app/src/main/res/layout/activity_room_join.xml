@@ -7,7 +7,7 @@
     tools:context=".RoomJoin">
 
     <TextView
-        android:id="@+id/sessioncode_label"
+        android:id="@+id/sessioncode_join_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -18,39 +18,39 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/sessioncode_edittext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sessioncode_label" />
-
-    <TextView
-        android:id="@+id/nicknamejoin_label"
+        android:id="@+id/sessioncode_join_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
-        android:text="Your NickName"
+        android:ems="10"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sessioncode_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/sessioncode_join_label" />
 
-    <EditText
-        android:id="@+id/nicknamejoin_edittext"
+    <TextView
+        android:id="@+id/nickname_join_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Your NickName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sessioncode_join_edittext" />
+
+    <EditText
+        android:id="@+id/nickname_join_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nicknamejoin_label" />
+        app:layout_constraintTop_toBottomOf="@+id/nickname_join_label" />
 
     <Button
         android:id="@+id/join_button"
@@ -58,10 +58,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:onClick="JoinSession"
+        android:layout_marginBottom="32dp"
         android:text="Join"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nicknamejoin_edittext" />
+        android:onClick="Join"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

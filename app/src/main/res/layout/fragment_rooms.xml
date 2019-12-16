@@ -8,38 +8,24 @@
     >
 
     <Button
-        android:id="@+id/rooms_button_join"
+        android:id="@+id/create_room_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:onClick="LaunchRoomJoin"
-        android:text="Join"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_title" />
-
-    <Button
-        android:id="@+id/rooms__button_create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:onClick="LaunchRoomCreate"
+        android:layout_marginTop="300dp"
         android:text="Create"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rooms_button_join" />
-
-
-    <TextView
-        android:id="@+id/room_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Rooms"
-        android:textSize="36sp"
+        android:onClick="LaunchHostSession"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
+    <Button
+        android:id="@+id/join_room_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Join"
+        android:onClick="LaunchJoinSession"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_room_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

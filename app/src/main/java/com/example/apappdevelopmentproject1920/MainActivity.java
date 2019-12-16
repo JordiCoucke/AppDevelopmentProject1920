@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -42,8 +43,6 @@ import java.util.Random;
 import io.grpc.Context;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "MainActivity";
-    public static String username = "username";
     private DrawerLayout drawer;
 
     @Override
@@ -112,45 +111,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
-
-    public void HostSession(final View view) {
-
-        EditText nickNameMessage;
-        nickNameMessage = findViewById(R.id.nickname_edittext);
-        String nickName = nickNameMessage.getText().toString();
-
-        Random r = new Random();
-        int rand = r.nextInt(899) + 1000;
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        Map<String, Object> session = new HashMap<>();
-        session.put("ID", rand);
-        username+= "0";
-        session.put(username, nickName);
-
-        String IDSessionName = "gameSessions";
-        // Add a new document with a generated ID
-        db.collection(IDSessionName).document("session")
-                .set(session)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void avoid) {
-                        Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
-                        startActivity(intent);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //incase of failure debugging
-                    }
-                });
-    }
-
-
-
-
     public void displayToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
@@ -198,12 +158,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void LaunchRoomCreate(View view) {
+    public void LaunchHostSession(View view){
         Intent intent = new Intent(view.getContext(), RoomCreator.class);
         startActivity(intent);
     }
 
-    public void LaunchRoomJoin(View view) {
+    public void LaunchJoinSession(View view){
         Intent intent = new Intent(view.getContext(), RoomJoin.class);
         startActivity(intent);
     }
