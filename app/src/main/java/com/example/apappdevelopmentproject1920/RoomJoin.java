@@ -60,52 +60,60 @@ public class RoomJoin extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
                         String[] DataArray = new String[document.getData().size()];
 
-                        String sessionCode = sessionCodeInput.getText().toString();
-                        ;
-                        String nickName = nickNameInput.getText().toString();
+                        EditText codeMessage;
+                        codeMessage = findViewById(R.id.sessioncode_join_edittext);
+                        String sessionCode = codeMessage.getText().toString();
+
+
+                        EditText nickNameMessage;
+                        nickNameMessage = findViewById(R.id.nickname_join_edittext);
+                        String nickName = nickNameMessage.getText().toString();
 
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        DocumentReference add = db.collection("gameSessions").document("session");
+                        final String collName = PickDocumentName(Integer.parseInt( sessionCode));
+                        DocumentReference add = db.collection("gameSessions").document(collName);
 
+                        if (document.get("username8") == null) {
+                            int i = 0;
+                            for (Object o : document.getData().values()) {
+                                DataArray[i] = o.toString();
+                                if (sessionCode.equals(DataArray[i])) {
+                                    int j = 1;
+                                    if (username.equals("username")) {
+                                        int userCount = Integer.parseInt(document.get("usercount").toString());
+                                        userCount++;
+                                        add.update("usercount", userCount);
 
-                        int i = 0;
-                        for (Object o: document.getData().values())
-                        {
-                            DataArray[i] = o.toString();
-                            if(sessionCode.equals(DataArray[i]))
-                            {
-                                int j = 1;
-                                if( username.equals("username") )
-                                {
-                                    int userCount = Integer.parseInt( document.get("usercount").toString());
-                                    userCount++;
-                                    add.update("usercount",userCount);
-
-                                    while(document.get("username"+String.valueOf(j)) != null)
-                                    {
-                                        j++;
+                                        while (document.get("username" + String.valueOf(j)) != null) {
+                                            j++;
+                                        }
+                                        username += j;
                                     }
-                                    username+=j;
+                                    Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
+                                    add.update(username, nickName);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("ID", sessionCode);
+                                    intent.putExtra("WasJustCreated", false);
+                                    intent.putExtra("SessionName",collName);
+                                    startActivity(intent);
                                 }
-                                Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
-                                add.update(username,nickName );
-                                intent.putExtra("username",username);
-                                intent.putExtra("ID",sessionCode);
-                                intent.putExtra("WasJustCreated",false);
-                                startActivity(intent);
+                                i++;
                             }
-                            i++;
-                        }
 
+                        }
                     }
-                } else {
-                    Log.w(TAG, "Error getting documents.", task.getException());
                 }
             }
 
         });
+    }
+    private String PickDocumentName(int r)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String documentName = "session";
+
+        return documentName+r;
     }
 }

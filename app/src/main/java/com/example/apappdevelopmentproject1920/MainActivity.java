@@ -43,7 +43,6 @@ import java.util.Random;
 import io.grpc.Context;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public static String username = "username";
     private DrawerLayout drawer;
 
     @Override
@@ -109,104 +108,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void HostSession(final View view) {
-
-        EditText nickNameMessage;
-        nickNameMessage = findViewById(R.id.nickname_edittext);
-        String nickName = nickNameMessage.getText().toString();
-
-        Random r = new Random();
-        final int rand = r.nextInt(8999) + 1000;
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        Map<String, Object> session = new HashMap<>();
-        session.put("ID", rand);
-        username+= "1";
-        session.put(username, nickName);
-        session.put("usercount", 1);
-
-        String IDSessionName = "gameSessions";
-        final String collName = PickDocumentName(rand);
-        db.collection(IDSessionName).document(collName)
-                .set(session)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void avoid) {
-                        Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
-                        intent.putExtra("username",username);
-                        intent.putExtra("ID",rand);
-                        intent.putExtra("WasJustCreated",true);
-                        intent.putExtra("SessionName", collName);
-                        startActivity(intent);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //incase of failure debugging
-                    }
-                });
-    }
-
-    public void JoinSession(final View view) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("gameSessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String[] DataArray = new String[document.getData().size()];
-
-                                EditText codeMessage;
-                                codeMessage = findViewById(R.id.sessioncode_edittext);
-                                String sessionCode = codeMessage.getText().toString();
-
-
-                                EditText nickNameMessage;
-                                nickNameMessage = findViewById(R.id.nicknamejoin_edittext);
-                                String nickName = nickNameMessage.getText().toString();
-
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                final String collName = PickDocumentName(Integer.parseInt( sessionCode));
-                                DocumentReference add = db.collection("gameSessions").document(collName);
-
-                                if (document.get("username8") == null) {
-                                    int i = 0;
-                                    for (Object o : document.getData().values()) {
-                                        DataArray[i] = o.toString();
-                                        if (sessionCode.equals(DataArray[i])) {
-                                            int j = 1;
-                                            if (username.equals("username")) {
-                                                int userCount = Integer.parseInt(document.get("usercount").toString());
-                                                userCount++;
-                                                add.update("usercount", userCount);
-
-                                                while (document.get("username" + String.valueOf(j)) != null) {
-                                                    j++;
-                                                }
-                                                username += j;
-                                            }
-                                            Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
-                                            add.update(username, nickName);
-                                            intent.putExtra("username", username);
-                                            intent.putExtra("ID", sessionCode);
-                                            intent.putExtra("WasJustCreated", false);
-                                            intent.putExtra("SessionName",collName);
-                                            startActivity(intent);
-                                        }
-                                        i++;
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-
-                });
-    }
-
-
     public void displayToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
@@ -262,13 +163,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void LaunchJoinSession(View view){
         Intent intent = new Intent(view.getContext(), RoomJoin.class);
         startActivity(intent);
-    }
-
-    private String PickDocumentName(int r)
-    {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String documentName = "session";
-
-        return documentName+r;
     }
 }

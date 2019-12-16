@@ -53,10 +53,13 @@ public class RoomCreator extends AppCompatActivity {
     }
 
     public void HostSession(final View view) {
-        String nickName = nickNameInput.getText().toString();
+
+        EditText nickNameMessage;
+        nickNameMessage = findViewById(R.id.nickname_host_edittext);
+        String nickName = nickNameMessage.getText().toString();
 
         Random r = new Random();
-        final int rand = r.nextInt(899) + 1000;
+        final int rand = r.nextInt(8999) + 1000;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> session = new HashMap<>();
@@ -66,16 +69,17 @@ public class RoomCreator extends AppCompatActivity {
         session.put("usercount", 1);
 
         String IDSessionName = "gameSessions";
-        // Add a new document with a generated ID
-        db.collection(IDSessionName).document("session")
+        final String collName = PickDocumentName(rand);
+        db.collection(IDSessionName).document(collName)
                 .set(session)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void avoid) {
-                        Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
+                        Intent intent = new Intent(view.getContext(), DatabaseConnected.class);
                         intent.putExtra("username",username);
                         intent.putExtra("ID",rand);
                         intent.putExtra("WasJustCreated",true);
+                        intent.putExtra("SessionName", collName);
                         startActivity(intent);
                     }
                 })
@@ -86,5 +90,11 @@ public class RoomCreator extends AppCompatActivity {
                     }
                 });
     }
+    private String PickDocumentName(int r)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String documentName = "session";
 
+        return documentName+r;
+    }
 }

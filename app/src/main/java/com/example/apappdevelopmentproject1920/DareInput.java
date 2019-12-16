@@ -68,28 +68,17 @@ public class DareInput extends AppCompatActivity {
         return Dares;
     }
 
-    private void SubmitDares(View view){
+    public void SubmitDares(View view){
         if(CheckDareInputs()){
             String[] dares = GetDares();
-            //Insert firebase code here
 
-            LaunchWaitingForOtherPlayers(view);
+            PlayerIsReady(view, dares);
         }
 
     }
-    private  void LaunchWaitingForOtherPlayers(View view){
-        Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
-        startActivity(intent);
-    }
 
-    public void PlayerIsReady(final View view)
-    {
-        final String dare1 = InputDare1.getText().toString();
-        final String dare2 = InputDare2.getText().toString();
-        final String dare3 = InputDare3.getText().toString();
-        final String dare4 = InputDare4.getText().toString();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public void PlayerIsReady(final View view, final String[] dares)
+    {FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("gameSessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -105,14 +94,14 @@ public class DareInput extends AppCompatActivity {
                         {
                             i++;
                         }
-                        add.update("dare"+i,dare1);
+                        add.update("dare"+i,dares[0]);
                         i++;
-                        add.update("dare"+i,dare2);
+                        add.update("dare"+i,dares[1]);
                         i++;
-                        add.update("dare"+i,dare3);
+                        add.update("dare"+i,dares[2]);
                         i++;
-                        add.update("dare"+i,dare4);
-                        Intent intent = new Intent(view.getContext(), GameMain.class);
+                        add.update("dare"+i,dares[3]);
+                        Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
                         intent.putExtra("SessionName",SessionName);
                         startActivity(intent);
                     }

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -41,10 +42,12 @@ public class DatabaseConnected extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_database_connected);
         Intent intent=getIntent();
         SessionName = intent.getStringExtra("SessionName");
         DBListen(this);
-        setContentView(R.layout.activity_database_connected);
+        //setContentView(R.layout.activity_database_connected);
+
         nickName = intent.getStringExtra("username");
         if(intent.getBooleanExtra("WasJustCreated", true))
         {
@@ -53,6 +56,11 @@ public class DatabaseConnected extends AppCompatActivity {
         }
         else {
             ID = intent.getStringExtra("ID");
+        }
+
+        if (!nickName.equals("username1")){
+            Button b = findViewById(R.id.launchDareInputbutton);
+            b.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -69,8 +77,6 @@ public class DatabaseConnected extends AppCompatActivity {
 
                 if (snapshot != null && snapshot.exists())
                 {
-
-                    setContentView(R.layout.activity_database_connected);
                     String[] names = new String[9];
                     int i = 1;
                     while(snapshot.contains("username"+i))
@@ -84,18 +90,18 @@ public class DatabaseConnected extends AppCompatActivity {
                         mWordList.addLast(names[i]);
                     }
 
-                    mRecyclerView = findViewById(R.id.recyclerview);
+                    mRecyclerView = findViewById(R.id.playerlist_recyclerview);
                     mAdapter = new WordListAdapter(c, mWordList);
                     mRecyclerView.setAdapter(mAdapter);
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(c));
-                    showTextViewRoomID = (TextView) findViewById(R.id.ShowTextViewRoomID);
+                    showTextViewRoomID = (TextView) findViewById(R.id.textView_sessioncode);
                     showTextViewRoomID.setText(ID);
                 }
             }
         });
     }
 
-    public void GoToDareInput(View view)
+    public void LaunchDareInput(View view)
     {
         Intent intent = new Intent(view.getContext(), DareInput.class);
         intent.putExtra("SessionName",SessionName);

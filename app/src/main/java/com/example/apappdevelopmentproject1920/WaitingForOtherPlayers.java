@@ -21,41 +21,17 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.LinkedList;
 
 public class WaitingForOtherPlayers extends AppCompatActivity {
-    private final LinkedList<String> mWordList = new LinkedList<>();
-    private RecyclerView mRecyclerView;
-    private WordListAdapter mAdapter;
-    public static String ID;
-    public static String nickName;
+    private String SessionName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiting_for_other_players);
 
-        DBListen(this);
-
         Intent intent = getIntent();
-        nickName = intent.getStringExtra("username");
-        if(intent.getBooleanExtra("WasJustCreated", true))
-        {
-            int iId = intent.getIntExtra("ID",0);
-            ID = String.valueOf( iId);
-        }
-        else {
-            ID = intent.getStringExtra("ID");
-        }
+        SessionName = intent.getStringExtra("SessionName");
 
-        final TextView showTextViewRoomID = (TextView) findViewById(R.id.textView_sessioncode);
-
-
-        ((Activity) this).runOnUiThread(new Runnable() {
-            @Override
-            public void run()
-            {
-                showTextViewRoomID.setText(ID);
-                showTextViewRoomID.invalidate();
-            }
-        });
+        DBListen(this);
     }
 
     public void DBListen(final Context c) {
@@ -71,38 +47,27 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
 
                 if (snapshot != null && snapshot.exists())
                 {
-
-                    setContentView(R.layout.activity_database_connected);
-                    String[] names = new String[8];
                     int i = 1;
-                    while(snapshot.contains("username"+i))
+                    while(snapshot.contains("dare"+i))
                     {
-                        names[i] = snapshot.get("username"+i).toString();
                         i++;
                     }
-
-                    for ( i = 1; i < names.length; i++)
+                    int j = 1;
+                    while(snapshot.contains("username"+j))
                     {
-                        //names[i] = snapshot.get("username"+i).toString();
-                        mWordList.addLast(names[i]);
+                        j++;
                     }
-                    mRecyclerView = findViewById(R.id.playerlist_recyclerview);
-                    mAdapter = new WordListAdapter(c, mWordList);
-                    mRecyclerView.setAdapter(mAdapter);
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(c));
+
+                    if(i == j*4){
+                        StartGame();
+                    }
                 }
             }
         });
     }
-
-    public void GoToDareInput(View view)
-    {
-        Intent intent = new Intent(view.getContext(), DareInput.class);
-        startActivity(intent);
-    }
-
-    public void LaunchDareInput(View view) {
-        Intent intent = new Intent(view.getContext(), DareInput.class);
+    public void StartGame() {
+        Intent intent = new Intent(this, GameMain.class);
+        intent.putExtra("SessionName",SessionName);
         startActivity(intent);
     }
 }
