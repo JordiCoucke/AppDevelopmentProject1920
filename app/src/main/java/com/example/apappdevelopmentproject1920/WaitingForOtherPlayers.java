@@ -47,7 +47,7 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
 
                 if (snapshot != null && snapshot.exists())
                 {
-                    int i = 1;
+                    int i = 0;
                     while(snapshot.contains("dare"+i))
                     {
                         i++;
@@ -58,7 +58,7 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
                         j++;
                     }
 
-                    if(i == j*4){
+                    if(i == (j-1)*4 ){
                         StartGame();
                     }
                 }
