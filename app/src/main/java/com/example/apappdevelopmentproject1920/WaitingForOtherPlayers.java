@@ -22,6 +22,7 @@ import java.util.LinkedList;
 
 public class WaitingForOtherPlayers extends AppCompatActivity {
     private String SessionName;
+    private Boolean gameHasStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,22 +45,21 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot snapshot,
                                 @Nullable FirebaseFirestoreException e)
             {
+                if(gameHasStarted == false) {
+                    if (snapshot != null && snapshot.exists()) {
+                        int i = 0;
+                        while (snapshot.contains("dare" + i)) {
+                            i++;
+                        }
+                        int j = 1;
+                        while (snapshot.contains("username" + j)) {
+                            j++;
+                        }
 
-                if (snapshot != null && snapshot.exists())
-                {
-                    int i = 0;
-                    while(snapshot.contains("dare"+i))
-                    {
-                        i++;
-                    }
-                    int j = 1;
-                    while(snapshot.contains("username"+j))
-                    {
-                        j++;
-                    }
-
-                    if(i == (j-1)*4 ){
-                        StartGame();
+                        if (i == (j - 1) * 4) {
+                            gameHasStarted = true;
+                            StartGame();
+                        }
                     }
                 }
             }
