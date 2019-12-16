@@ -36,7 +36,7 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
 
     public void DBListen(final Context c) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final DocumentReference docRef = db.collection("gameSessions").document("session");
+        final DocumentReference docRef = db.collection("gameSessions").document(SessionName);
 
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>()
         {
