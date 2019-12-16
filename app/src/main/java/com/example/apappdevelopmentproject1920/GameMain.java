@@ -45,6 +45,7 @@ public class GameMain extends AppCompatActivity {
     public static int round = 1;
     public static int turn = 1;
     public static int[] user = {0,0,0,0,0,0,0,0};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,7 +173,7 @@ public class GameMain extends AppCompatActivity {
         canVote = true;
         if(userCount == turn)
         {
-            if(round == 3)
+            if(round == 4)
             {
                 ComparePlayerPoint();
             }

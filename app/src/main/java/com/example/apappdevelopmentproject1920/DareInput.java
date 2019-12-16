@@ -18,25 +18,67 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class DareInput extends AppCompatActivity {
     private String SessionName;
+    private EditText InputDare1;
+    private EditText InputDare2;
+    private EditText InputDare3;
+    private EditText InputDare4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dare_input);
         Intent intent=getIntent();
         SessionName = intent.getStringExtra("SessionName");
+
+        InputDare1 = findViewById(R.id.editText_dare1);
+        InputDare2 = findViewById(R.id.editText_dare2);
+        InputDare3 = findViewById(R.id.editText_dare3);
+        InputDare4 = findViewById(R.id.editText_dare4);
+
+
     }
 
-    public void PlayerIsReady(final View view)
-    {
-        EditText editTextDare1 = findViewById(R.id.editText0);
-        EditText editTextDare2 = findViewById(R.id.editText1);
-        EditText editTextDare3 = findViewById(R.id.editText2);
+    private boolean CheckDareInputs() {
+        if (InputDare1.getText().toString().equals("")){
+            InputDare1.setError("Dare should not be empty");
+            return false;
+        }
+        if (InputDare2.getText().toString().equals("")){
+            InputDare2.setError("Dare should not be empty");
+            return false;
+        }
+        if (InputDare3.getText().toString().equals("")){
+            InputDare3.setError("Dare should not be empty");
+            return false;
+        }
+        if (InputDare4.getText().toString().equals("")){
+            InputDare4.setError("Dare should not be empty");
+            return false;
+        }
+        return true;
+    }
 
-        final String dare1 = editTextDare1.getText().toString();
-        final String dare2 = editTextDare2.getText().toString();
-        final String dare3 = editTextDare3.getText().toString();
+    private String[] GetDares(){
+        String[] Dares = {
+                InputDare1.getText().toString(),
+                InputDare2.getText().toString(),
+                InputDare3.getText().toString(),
+                InputDare4.getText().toString()
+        };
+        return Dares;
+    }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public void SubmitDares(View view){
+        if(CheckDareInputs()){
+            String[] dares = GetDares();
+
+            PlayerIsReady(view, dares);
+        }
+
+    }
+
+    public void PlayerIsReady(final View view, final String[] dares)
+    {FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("gameSessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -52,12 +94,14 @@ public class DareInput extends AppCompatActivity {
                         {
                             i++;
                         }
-                        add.update("dare"+i,dare1);
+                        add.update("dare"+i,dares[0]);
                         i++;
-                        add.update("dare"+i,dare2);
+                        add.update("dare"+i,dares[1]);
                         i++;
-                        add.update("dare"+i,dare3);
-                        Intent intent = new Intent(view.getContext(), GameMain.class);
+                        add.update("dare"+i,dares[2]);
+                        i++;
+                        add.update("dare"+i,dares[3]);
+                        Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
                         intent.putExtra("SessionName",SessionName);
                         startActivity(intent);
                     }

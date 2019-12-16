@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".WaitingForOtherPlayers"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".RoomJoin"></activity>
         <activity
             android:name=".RoomCreator"
             android:label="Create Room"

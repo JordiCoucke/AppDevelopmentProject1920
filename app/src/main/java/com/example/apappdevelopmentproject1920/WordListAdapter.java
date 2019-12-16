@@ -11,14 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.LinkedList;
 
 public class WordListAdapter extends
-        RecyclerView.Adapter<WordListAdapter.WordViewHolder>
-{
+        RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
     private LayoutInflater mInflater;
     private final LinkedList<String> mWordList;
+
     class WordViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
         public final TextView wordItemView;
         final WordListAdapter mAdapter;
+
         public WordViewHolder(View itemView, WordListAdapter adapter) {
             super(itemView);
             wordItemView = itemView.findViewById(R.id.word);
@@ -30,12 +31,12 @@ public class WordListAdapter extends
         public void onClick(View view) {
             // Get the position of the item that was clicked.
             int mPosition = getLayoutPosition();
-// Use that to access the affected item in mWordList.
+            // Use that to access the affected item in mWordList.
             String element = mWordList.get(mPosition);
-// Change the word in the mWordList.
+            // Change the word in the mWordList.
             //mWordList.set(mPosition, "Clicked! " + element);
-// Notify the adapter, that the data has changed so it can
-// update the RecyclerView to display the data.
+            // Notify the adapter, that the data has changed so it can
+            // update the RecyclerView to display the data.
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -45,6 +46,7 @@ public class WordListAdapter extends
         mInflater = LayoutInflater.from(context);
         this.mWordList = wordList;
     }
+
     @Override
     public WordViewHolder onCreateViewHolder(ViewGroup parent,
                                              int viewType) {

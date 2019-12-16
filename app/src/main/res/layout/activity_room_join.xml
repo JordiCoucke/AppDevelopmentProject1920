@@ -4,13 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/items"
-    android:background="#50BE64"
-    tools:context=".DatabaseConnected">
-
+    tools:context=".RoomJoin">
 
     <TextView
-        android:id="@+id/sessioncode_label"
+        android:id="@+id/sessioncode_join_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -20,50 +17,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView_sessioncode"
+    <EditText
+        android:id="@+id/sessioncode_join_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
-        android:text="*Error: Unable to get code"
+        android:ems="10"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sessioncode_label" />
+        app:layout_constraintTop_toBottomOf="@+id/sessioncode_join_label" />
 
     <TextView
-        android:id="@+id/playerlist_label"
+        android:id="@+id/nickname_join_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
-        android:text="Connected players"
+        android:text="Your NickName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_sessioncode" />
+        app:layout_constraintTop_toBottomOf="@+id/sessioncode_join_edittext" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/playerlist_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
+    <EditText
+        android:id="@+id/nickname_join_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:ems="10"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerlist_label" />
+        app:layout_constraintTop_toBottomOf="@+id/nickname_join_label" />
 
     <Button
-        android:id="@+id/launchDareInputbutton"
+        android:id="@+id/join_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginBottom="32dp"
-        android:text="Start Game"
-        android:onClick="LaunchDareInput"
+        android:text="Join"
+        android:onClick="Join"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
