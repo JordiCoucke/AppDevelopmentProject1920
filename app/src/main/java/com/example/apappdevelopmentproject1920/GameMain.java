@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -34,7 +35,7 @@ public class GameMain extends AppCompatActivity {
     private TextView TurnTextView;
     private int timer;
     private String SessionName;
-    private static int userCount;
+    private int userCount;
     private int TurnControl = 0;
     private static final long TIMER_START_VALUE = 61000;
     private long timeInMilliseconds = TIMER_START_VALUE;
@@ -66,23 +67,11 @@ public class GameMain extends AppCompatActivity {
         if(canVote == true) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            db.collection("gameSessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+            DocumentReference docRef = db.collection("gameSessions").document(SessionName);
 
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            DocumentReference coll = db.collection("gameSessions").document(SessionName);
+            user[turn - 1] += 50;
+            docRef.update("score:username" + turn, user[turn - 1]);
 
-                            user[turn - 1]+=50;
-                            coll.update("score:username" + turn, user[turn - 1]);
-
-                        }
-                    }
-                }
-
-            });
             canVote = false;
         }
     }
@@ -92,23 +81,11 @@ public class GameMain extends AppCompatActivity {
         if(canVote == true) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            db.collection("gameSessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+            DocumentReference docRef = db.collection("gameSessions").document(SessionName);
 
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            DocumentReference coll = db.collection("gameSessions").document(SessionName);
+            user[turn - 1] += 0;
+            docRef.update("score:username" + turn, user[turn - 1]);
 
-                            user[turn - 1]+=0;
-                            coll.update("score:username" + turn, user[turn - 1]);
-
-                        }
-                    }
-                }
-
-            });
             canVote = false;
         }
     }
@@ -118,23 +95,11 @@ public class GameMain extends AppCompatActivity {
         if(canVote == true) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            db.collection("gameSessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+            DocumentReference docRef = db.collection("gameSessions").document(SessionName);
 
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            DocumentReference coll = db.collection("gameSessions").document(SessionName);
+            user[turn - 1] += 25;
+            docRef.update("score:username" + turn, user[turn - 1]);
 
-                            user[turn - 1]+=25;
-                            coll.update("score:username" + turn, user[turn - 1]);
-
-                        }
-                    }
-                }
-
-            });
             canVote = false;
         }
     }
@@ -197,61 +162,56 @@ public class GameMain extends AppCompatActivity {
 
     public void GetDares() {
 
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-            db.collection("gameSessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-
-                            int i = 0;
-                            int dareCount = 0;
-                            String sUserCount = String.valueOf( document.get("usercount"));
-                            int iUserCount = Integer.parseInt(sUserCount);
-                            userCount = iUserCount;
-                            dares = new String[(iUserCount*3)];
-                            for (Object o: document.getData().values())
-                            {
-                                if(document.getData().containsKey("dare"+i))
-                                {
-                                   dares[i] =  String.valueOf(document.get("dare"+i));
-                                  dareCount++;
-                                }
-                                i++;
-                            }
-                        }
-                    }
-                }
-
-            });
-    }
-
-    public void GetUsernames()
-    {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("gameSessions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        DocumentReference docRef = db.collection("gameSessions").document(SessionName);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-
-                        String sUserCount = String.valueOf( document.get("usercount"));
-                        int iUserCount = Integer.parseInt(sUserCount);
-                        userCount = iUserCount;
-
-                        String[] usernames = new String[iUserCount];
-                        for (int j = 0; j < iUserCount; j++ )
-                        {
-                            String s = "username"+(j+1);
-                            String username = String.valueOf(document.get(s));
-                            usernames[j] = username;
+                    DocumentSnapshot document = task.getResult();
+                    int i = 0;
+                    int dareCount = 0;
+                    String sUserCount = String.valueOf(document.get("usercount"));
+                    int iUserCount = Integer.parseInt(sUserCount);
+                    userCount = iUserCount;
+                    dares = new String[(iUserCount * 4)];
+                    for (Object o : document.getData().values()) {
+                        if (document.getData().containsKey("dare" + i)) {
+                            dares[i] = String.valueOf(document.get("dare" + i));
+                            dareCount++;
                         }
-                        userNames = usernames;
+                        i++;
+
+
                     }
                 }
             }
+
+        });
+    }
+
+    public void GetUsernames() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("gameSessions").document(SessionName);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    String sUserCount = String.valueOf(document.get("usercount"));
+                    int iUserCount = Integer.parseInt(sUserCount);
+                    userCount = iUserCount;
+
+                    String[] usernames = new String[iUserCount];
+                    for (int j = 0; j < iUserCount; j++) {
+                        String s = "username" + (j + 1);
+                        String username = String.valueOf(document.get(s));
+                        usernames[j] = username;
+                    }
+                    userNames = usernames;
+                }
+            }
+
 
         });
     }

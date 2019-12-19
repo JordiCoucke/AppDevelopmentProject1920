@@ -88,22 +88,23 @@ public class DareInput extends AppCompatActivity {
 
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         DocumentReference add = db.collection("gameSessions").document(SessionName);
-
-                        int i = 0;
-                        while(document.contains("dare"+i))
-                        {
+                        String CheckDocNameVar = "session" + String.valueOf( document.get("ID" ));
+                        if (CheckDocNameVar.equals( SessionName)) {
+                            int i = 0;
+                            while (document.contains("dare" + i)) {
+                                i++;
+                            }
+                            add.update("dare" + i, dares[0]);
                             i++;
+                            add.update("dare" + i, dares[1]);
+                            i++;
+                            add.update("dare" + i, dares[2]);
+                            i++;
+                            add.update("dare" + i, dares[3]);
+                            Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
+                            intent.putExtra("SessionName", SessionName);
+                            startActivity(intent);
                         }
-                        add.update("dare"+i,dares[0]);
-                        i++;
-                        add.update("dare"+i,dares[1]);
-                        i++;
-                        add.update("dare"+i,dares[2]);
-                        i++;
-                        add.update("dare"+i,dares[3]);
-                        Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
-                        intent.putExtra("SessionName",SessionName);
-                        startActivity(intent);
                     }
                 }
             }
