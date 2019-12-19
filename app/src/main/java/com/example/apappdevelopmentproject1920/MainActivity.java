@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HomeFragment()).commit();
+                    new RoomsFragment()).commit();
         }
 
     }
@@ -117,28 +117,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
-            case R.id.home:
-                // Handle the camera import action (for now display a toast).
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new HomeFragment()).commit();
-                displayToast(getString(R.string.chose_home));
-                break;
             case R.id.rooms:
                 // Handle the gallery action (for now display a toast).
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new RoomsFragment()).commit();
                 displayToast(getString(R.string.chose_rooms));
-                break;
-            case R.id.profile:
-                // Handle the slideshow action (for now display a toast).
-
-                displayToast(getString(R.string.chose_profile));
-                break;
-            case R.id.tests:
-                // Handle the slideshow action (for now display a toast).
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new TestsFragment()).commit();
-                displayToast(getString(R.string.chose_tests));
                 break;
             case R.id.info:
                 // Handle the tools action (for now display a toast).
