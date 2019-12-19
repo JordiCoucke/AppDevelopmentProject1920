@@ -10,7 +10,7 @@
             android:title="Rooms" />
     </group>
 
-    <item android:title="">
+    <item android:title="Extra">
         <menu>
             <item
             android:id="@+id/info"

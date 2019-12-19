@@ -1,10 +1,8 @@
 package com.example.apappdevelopmentproject1920;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,17 +14,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.protobuf.StringValue;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Random;
-import android.content.Context;
+
 public class GameMain extends AppCompatActivity {
     private TextView timerTextView;
     private TextView DareTextView;
@@ -57,7 +48,7 @@ public class GameMain extends AppCompatActivity {
         RoundTextView = (TextView) findViewById(R.id.PlayersRoundTV);
         TurnTextView = (TextView) findViewById(R.id.PlayersTurnTV);
         DareTextView = (TextView) findViewById(R.id.DareDescriptionTV);
-        PlayerNameTextview = (TextView) findViewById(R.id.PlayerTVUsername);
+        PlayerNameTextview = (TextView) findViewById(R.id.PlayerGameLabel);
         TurnTextView.setText(String.valueOf(turn));
         RoundTextView.setText(String.valueOf(round));
         StartTimer();

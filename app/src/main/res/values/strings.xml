@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">APAppDevelopmentProject1920</string>
-    <string name="action_settings">Settings</string>
     <string name="titleimage">TitleImage</string>
     <string name="app_title">Expedition Jordinson</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -15,4 +14,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="info_titletext">About Expedition Jordinson</string>
+    <string name="info_infotext">Expedition Jordinson is a Dare app that let\'s you join your friends and play dare with them without knowing who made you perform that silly dare. Player\'s will get to vote on the best participant and the player with the most points in the end wins!</string>
 </resources>
