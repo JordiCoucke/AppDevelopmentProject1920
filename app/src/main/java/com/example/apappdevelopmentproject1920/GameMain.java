@@ -1,10 +1,8 @@
 package com.example.apappdevelopmentproject1920;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,17 +14,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.protobuf.StringValue;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Random;
-import android.content.Context;
+
 public class GameMain extends AppCompatActivity {
     private TextView timerTextView;
     private TextView DareTextView;
@@ -138,7 +129,7 @@ public class GameMain extends AppCompatActivity {
         canVote = true;
         if(userCount == turn)
         {
-            if(round == 4)
+            if(round == 3)
             {
                 ComparePlayerPoint();
             }
@@ -174,7 +165,7 @@ public class GameMain extends AppCompatActivity {
                     String sUserCount = String.valueOf(document.get("usercount"));
                     int iUserCount = Integer.parseInt(sUserCount);
                     userCount = iUserCount;
-                    dares = new String[(iUserCount * 4)];
+                    dares = new String[(iUserCount * 3)];
                     for (Object o : document.getData().values()) {
                         if (document.getData().containsKey("dare" + i)) {
                             dares[i] = String.valueOf(document.get("dare" + i));

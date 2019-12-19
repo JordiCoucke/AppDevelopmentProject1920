@@ -11,14 +11,17 @@
         android:theme="@style/AppTheme">
         <activity android:name=".WaitingForOtherPlayers"
             android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".RoomJoin"></activity>
+        <activity
+            android:name=".RoomJoin"
+            android:label="@string/join_room_title"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".RoomCreator"
-            android:label="Create Room"
+            android:label="@string/create_room_title"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DareInput"
-            android:label="DareInput"
+            android:label="@string/dare_input_title"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -27,7 +30,7 @@
 
         <activity
             android:name=".GameMain"
-            android:label="GameMain"
+            android:label="@string/game_main_title"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -36,7 +39,7 @@
 
         <activity
             android:name=".GameOver"
-            android:label="GameOver"
+            android:label="@string/game_over_title"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

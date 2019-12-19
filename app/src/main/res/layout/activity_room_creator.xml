@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RoomCreator">
+    tools:context=".RoomCreator"
+    android:theme="@style/MyCustomBackground">
 
     <TextView
         android:id="@+id/roomname_label"
@@ -52,45 +53,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nickname_host_label" />
 
-    <TextView
-        android:id="@+id/sessiontype_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Session type"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nickname_host_edittext" />
-
-    <RadioGroup
-        android:id="@+id/sessiontype_host_radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sessiontype_label">
-
-        <RadioButton
-            android:id="@+id/public_radiobutton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Public" />
-
-        <RadioButton
-            android:id="@+id/private_radiobutton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Private" />
-
-        <RadioButton
-            android:id="@+id/invisible_radiobutton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Invisible" />
-    </RadioGroup>
-
 
     <Button
         android:id="@+id/createsession_button"
@@ -98,11 +60,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Create"
+        android:layout_marginBottom="32dp"
         android:onClick="CreateRoom"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sessiontype_host_radioGroup" />
+        android:text="Create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,29 +5,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/home"
-            android:icon="@drawable/ic_home"
-            android:title="Home" />
-        <item
             android:id="@+id/rooms"
             android:icon="@drawable/ic_rooms"
             android:title="Rooms" />
-        <item
-            android:id="@+id/profile"
-            android:icon="@drawable/ic_profile"
-            android:title="Profile" />
-        <item
-            android:id="@+id/tests"
-            android:icon="@drawable/addplayer"
-            android:title="Tests" />
     </group>
 
-    <item android:title="">
+    <item android:title="Extra">
         <menu>
             <item
-                android:id="@+id/info"
-                android:icon="@drawable/ic_info"
-                android:title="Info" />
+            android:id="@+id/info"
+            android:icon="@drawable/ic_info"
+            android:title="Info" />
             <item
                 android:id="@+id/settings"
                 android:icon="@drawable/ic_settings"

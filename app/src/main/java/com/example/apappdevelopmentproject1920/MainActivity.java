@@ -71,44 +71,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HomeFragment()).commit();
+                    new RoomsFragment()).commit();
         }
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer((GravityCompat.START));
-        } else if(getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
         }
         else {
             super.onBackPressed();
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
     public void displayToast(String text) {
@@ -120,37 +98,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
-            case R.id.home:
-                // Handle the camera import action (for now display a toast).
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new HomeFragment()).commit();
-                displayToast(getString(R.string.chose_home));
-                break;
             case R.id.rooms:
                 // Handle the gallery action (for now display a toast).
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new RoomsFragment()).commit();
                 displayToast(getString(R.string.chose_rooms));
                 break;
-            case R.id.profile:
-                // Handle the slideshow action (for now display a toast).
-
-                displayToast(getString(R.string.chose_profile));
-                break;
-            case R.id.tests:
-                // Handle the slideshow action (for now display a toast).
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new TestsFragment()).commit();
-                displayToast(getString(R.string.chose_tests));
-                break;
             case R.id.info:
                 // Handle the tools action (for now display a toast).
-
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new InfoFragment()).commit();
                 displayToast(getString(R.string.chose_info));
                 break;
             case R.id.settings:
                 // Handle the send action (for now display a toast).
-
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new SettingsFragment()).commit();
                 displayToast(getString(R.string.chose_settings));
                 break;
         }

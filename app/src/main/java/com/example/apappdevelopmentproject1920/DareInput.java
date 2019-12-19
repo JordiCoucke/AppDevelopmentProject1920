@@ -21,7 +21,7 @@ public class DareInput extends AppCompatActivity {
     private EditText InputDare1;
     private EditText InputDare2;
     private EditText InputDare3;
-    private EditText InputDare4;
+    //private EditText InputDare4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class DareInput extends AppCompatActivity {
         InputDare1 = findViewById(R.id.editText_dare1);
         InputDare2 = findViewById(R.id.editText_dare2);
         InputDare3 = findViewById(R.id.editText_dare3);
-        InputDare4 = findViewById(R.id.editText_dare4);
+        //InputDare4 = findViewById(R.id.editText_dare4);
 
 
     }
@@ -51,10 +51,10 @@ public class DareInput extends AppCompatActivity {
             InputDare3.setError("Dare should not be empty");
             return false;
         }
-        if (InputDare4.getText().toString().equals("")){
-            InputDare4.setError("Dare should not be empty");
-            return false;
-        }
+        //if (InputDare4.getText().toString().equals("")){
+        //    InputDare4.setError("Dare should not be empty");
+        //    return false;
+        //}
         return true;
     }
 
@@ -63,7 +63,7 @@ public class DareInput extends AppCompatActivity {
                 InputDare1.getText().toString(),
                 InputDare2.getText().toString(),
                 InputDare3.getText().toString(),
-                InputDare4.getText().toString()
+                //InputDare4.getText().toString()
         };
         return Dares;
     }
@@ -99,8 +99,8 @@ public class DareInput extends AppCompatActivity {
                             add.update("dare" + i, dares[1]);
                             i++;
                             add.update("dare" + i, dares[2]);
-                            i++;
-                            add.update("dare" + i, dares[3]);
+                            //i++;
+                            //add.update("dare" + i, dares[3]);
                             Intent intent = new Intent(view.getContext(), WaitingForOtherPlayers.class);
                             intent.putExtra("SessionName", SessionName);
                             startActivity(intent);
