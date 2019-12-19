@@ -48,7 +48,7 @@ public class GameMain extends AppCompatActivity {
         RoundTextView = (TextView) findViewById(R.id.PlayersRoundTV);
         TurnTextView = (TextView) findViewById(R.id.PlayersTurnTV);
         DareTextView = (TextView) findViewById(R.id.DareDescriptionTV);
-        PlayerNameTextview = (TextView) findViewById(R.id.PlayerGameLabel);
+        PlayerNameTextview = (TextView) findViewById(R.id.PlayerTVUsername);
         TurnTextView.setText(String.valueOf(turn));
         RoundTextView.setText(String.valueOf(round));
         StartTimer();
@@ -129,7 +129,7 @@ public class GameMain extends AppCompatActivity {
         canVote = true;
         if(userCount == turn)
         {
-            if(round == 4)
+            if(round == 3)
             {
                 ComparePlayerPoint();
             }
@@ -165,7 +165,7 @@ public class GameMain extends AppCompatActivity {
                     String sUserCount = String.valueOf(document.get("usercount"));
                     int iUserCount = Integer.parseInt(sUserCount);
                     userCount = iUserCount;
-                    dares = new String[(iUserCount * 4)];
+                    dares = new String[(iUserCount * 3)];
                     for (Object o : document.getData().values()) {
                         if (document.getData().containsKey("dare" + i)) {
                             dares[i] = String.valueOf(document.get("dare" + i));

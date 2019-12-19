@@ -16,4 +16,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="info_titletext">About Expedition Jordinson</string>
     <string name="info_infotext">Expedition Jordinson is a Dare app that let\'s you join your friends and play dare with them without knowing who made you perform that silly dare. Player\'s will get to vote on the best participant and the player with the most points in the end wins!</string>
+    <string name="join_room_title">Join a Room</string>
+    <string name="create_room_title">Create Room</string>
+    <string name="dare_input_title">Dare Input</string>
+    <string name="game_over_title">Game Over</string>
+    <string name="game_main_title">Game Main</string>
 </resources>

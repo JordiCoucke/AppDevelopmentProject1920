@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RoomCreator">
+    tools:context=".RoomCreator"
+    android:theme="@style/MyCustomBackground">
 
     <TextView
         android:id="@+id/roomname_label"

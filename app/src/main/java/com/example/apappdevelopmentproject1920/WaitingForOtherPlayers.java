@@ -56,7 +56,7 @@ public class WaitingForOtherPlayers extends AppCompatActivity {
                             j++;
                         }
 
-                        if (i == (j - 1) * 4) {
+                        if (i == (j - 1) * 3) {
                             gameHasStarted = true;
                             StartGame();
                         }

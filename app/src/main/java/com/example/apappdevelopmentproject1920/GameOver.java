@@ -25,9 +25,8 @@ public class GameOver extends AppCompatActivity {
 
     public void EndGameAndReturn(View view)
     {
-        Intent intent = new Intent(this, MainActivity.class);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("gameSessions").document(SessionName).delete();
-        startActivity(intent);
+        navigateUpTo(new Intent(getBaseContext(), MainActivity.class));
     }
 }

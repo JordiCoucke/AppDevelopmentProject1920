@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GameMain"
-    android:background="#50BE64">
+    android:theme="@style/MyCustomBackground">
 
     <Button
         android:id="@+id/goodButton"
@@ -133,7 +133,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="Player"
+        android:text="Player:"
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/turnlabel" />
